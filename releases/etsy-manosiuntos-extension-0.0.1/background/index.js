@@ -1,0 +1,1 @@
+chrome.runtime.onMessage.addListener((({type:e,payload:r},{tab:t},s)=>{"SET_RECIPIENT"===e&&chrome.tabs.query({currentWindow:!0},(e=>{const r=e.find((({url:e})=>e.includes("https://lpexpress.lt")));r&&chrome.tabs.remove(r.id),chrome.tabs.create({active:!0,url:"https://lpexpress.lt/send/prepare?addNew=true"}),chrome.runtime.sendMessage({type:"CREATE_MANOSIUNTOS"});}));}));

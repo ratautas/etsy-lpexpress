@@ -1,0 +1,35 @@
+{
+  "name": "Etsy Manosiuntos autofiller",
+  "description": "Fill manosiuntos.lt forms in on click from etsy",
+  "version": "1.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "js": ["etsy-content.js"],
+      "matches": ["https://www.etsy.com/*", "https://etsy.com/*", "http://www.etsy.com/*", "http://etsy.com/*"]
+    },
+    {
+      "js": ["manosiuntos-content.js"],
+      "matches": ["https://manosiuntos.post.lt/*", "http://manosiuntos.post.lt/*"]
+    }
+  ],
+  "permissions": ["tabs", "storage", "activeTab", "scripting"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "/images/tingu16.png",
+      "32": "/images/tingu32.png",
+      "48": "/images/tingu48.png",
+      "128": "/images/tingu64.png"
+    }
+  },
+  "icons": {
+    "16": "/images/tingu16.png",
+    "32": "/images/tingu32.png",
+    "48": "/images/tingu48.png",
+    "128": "/images/tingu64.png"
+  }
+}
