@@ -31,7 +31,7 @@ const setNgInput = (inputRef, value, select = false) => {
 };
 
 // todo - make countries addable via UI
-const getCountry = (countryString) => {
+const translateCountry = (countryString) => {
   switch (countryString) {
     case "United Kingdom":
       return "Didžioji Britanija";
@@ -55,8 +55,10 @@ const getCountry = (countryString) => {
       return "Australija";
     case "Israel":
       return "Izraelis";
-    default:
+    case "United States":
       return "Jungtinės Amerikos Valstijos";
+    default:
+      return "";
   }
 };
 
@@ -97,7 +99,7 @@ const stepOneHandler = (sendItemStepOneRef) => {
 const stepTwoHandler = (sendItemStepTwoRef) => {
   currentRefName = sendItemStepTwoRef.localName;
 
-  const country = getCountry(recipient.country);
+  const country = translateCountry(recipient.country);
   const enterKeyboardEvent = new KeyboardEvent("keydown", {
     code: "Enter",
     key: "Enter",
