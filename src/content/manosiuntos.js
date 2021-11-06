@@ -30,6 +30,7 @@ const setNgInput = (inputRef, value, select = false) => {
   inputRef.dispatchEvent(new Event("blur", { bubbles: true }));
 };
 
+// todo - make countries addable via UI
 const getCountry = (countryString) => {
   switch (countryString) {
     case "United Kingdom":
@@ -38,6 +39,22 @@ const getCountry = (countryString) => {
       return "Kanada";
     case "Ireland":
       return "Airija";
+    case "Germany":
+      return "Vokietija";
+    case "Austria":
+      return "Austrija";
+    case "The Netherlands":
+      return "Olandija (Nyderlandai)";
+    case "France":
+      return "Prancūzija";
+    case "Denmark":
+      return "Danija";
+    case "Italy":
+      return "Italija";
+    case "Australia":
+      return "Australija";
+    case "Israel":
+      return "Izraelis";
     default:
       return "Jungtinės Amerikos Valstijos";
   }
