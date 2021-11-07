@@ -5,13 +5,32 @@ const ORIGIN_COUNTRY_ID = 118; // should come from options -- 118 for Lithuania
 
 const OBSERVER_DEFAULTS = { subtree: true, childList: true };
 
+const enterKeyboardEvent = new KeyboardEvent("keydown", {
+  code: "Enter",
+  key: "Enter",
+  charKode: 13,
+  keyCode: 13,
+  view: window,
+  bubbles: true,
+});
+
 let appRootRef;
 let newParcelModalRef;
 let currentRefName;
 let recipient;
+let countries;
 
 chrome.storage.sync.get("recipient", (result) => {
   recipient = result.recipient;
+});
+
+chrome.storage.sync.get("countries", (result) => {
+  countries = result.countries;
+});
+
+chrome.storage.onChanged.addListener((changes) => {
+  if (!changes.countries) return;
+  countries = changes.countries.newValue;
 });
 
 const scrollToNextButton = () =>
@@ -28,38 +47,6 @@ const setNgInput = (inputRef, value, select = false) => {
   inputRef.dispatchEvent(new Event("input", { bubbles: true }));
   inputRef.dispatchEvent(new Event("change", { bubbles: true }));
   inputRef.dispatchEvent(new Event("blur", { bubbles: true }));
-};
-
-// todo - make countries addable via UI
-const translateCountry = (countryString) => {
-  switch (countryString) {
-    case "United Kingdom":
-      return "Didžioji Britanija";
-    case "Canada":
-      return "Kanada";
-    case "Ireland":
-      return "Airija";
-    case "Germany":
-      return "Vokietija";
-    case "Austria":
-      return "Austrija";
-    case "The Netherlands":
-      return "Olandija (Nyderlandai)";
-    case "France":
-      return "Prancūzija";
-    case "Denmark":
-      return "Danija";
-    case "Italy":
-      return "Italija";
-    case "Australia":
-      return "Australija";
-    case "Israel":
-      return "Izraelis";
-    case "United States":
-      return "Jungtinės Amerikos Valstijos";
-    default:
-      return "";
-  }
 };
 
 const stepOneHandler = (sendItemStepOneRef) => {
@@ -99,15 +86,9 @@ const stepOneHandler = (sendItemStepOneRef) => {
 const stepTwoHandler = (sendItemStepTwoRef) => {
   currentRefName = sendItemStepTwoRef.localName;
 
-  const country = translateCountry(recipient.country);
-  const enterKeyboardEvent = new KeyboardEvent("keydown", {
-    code: "Enter",
-    key: "Enter",
-    charKode: 13,
-    keyCode: 13,
-    view: window,
-    bubbles: true,
-  });
+  const country = countries.reduce((acc, country) => {
+    return country.en === recipient.country ? country.lt : acc;
+  }, null);
 
   const recipientInputRef = sendItemStepTwoRef.querySelector("input[formcontrolname='recipient']");
   setNgInput(recipientInputRef, recipient.name);
