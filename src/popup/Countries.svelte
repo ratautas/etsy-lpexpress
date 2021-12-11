@@ -5,13 +5,13 @@
   let enInputs = []
 
   chrome.storage.sync.get(COUNTRIES_STORAGE_KEY, (result) => {
-    countries = result?.[COUNTRIES_STORAGE_KEY]
+    countries = result?.[COUNTRIES_STORAGE_KEY] ?? []
   })
 
   const handleSubmit = async () => {
     countries = [...countries, { en: '', lt: '' }]
     await tick
-    enInputs[countries.length - 1]?.focus()
+    enInputs[countries?.length - 1]?.focus()
   }
 
   const handleDeleteClick = (i) => {

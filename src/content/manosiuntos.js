@@ -67,7 +67,7 @@ const stepOneHandler = (sendItemStepOneRef) => {
   });
 
   const sizeObserver = new MutationObserver(() => {
-    const mSizeLabelRef = sendItemStepOneRef.querySelector("label[for='box-s1-sc2-3']");
+    const mSizeLabelRef = sendItemStepOneRef.querySelector("label[for='box-s1-sc2-10']");
 
     if (!mSizeLabelRef) return;
 
